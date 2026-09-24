@@ -142,7 +142,7 @@ The application will start on `http://localhost:3000`.
 3. Select your board: **Tools -> Board -> ESP8266 Boards -> NodeMCU 1.0 (ESP-12E Module)**.
 4. Set the `SERVER_BASE_URL` in the Arduino code:
    - For local testing: `http://<YOUR_COMPUTER_LOCAL_IP>:3000` (e.g. `http://192.168.1.100:3000`).
-   - For Render production: `https://<YOUR-RENDER-APP-NAME>.onrender.com`.
+   - For Render production: `https://iot-project-59i6.onrender.com`.
 5. Connect your ESP8266 via micro-USB and click **Upload**.
 6. Open Serial Monitor at **115200 baud** to verify WiFi connection and sensor telemetry transmissions.
 
@@ -178,7 +178,8 @@ This repository is pre-configured for deployment to [Render](https://render.com)
    - **Name:** `sqlite-data`
    - **Mount Path:** `/opt/render/project/src/data`
    - **Size:** `1 GB`
-6. Click **Create Web Service**. Your public URL (e.g. `https://tss-group-4-iot.onrender.com`) will be generated.
+6. Click **Create Web Service**. Your live production app is available at:
+   👉 **[https://iot-project-59i6.onrender.com](https://iot-project-59i6.onrender.com)**
 
 ---
 
