@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login & Registration | TSS Group 4 IoT Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="min-h-screen flex flex-col justify-between p-4 md:p-8">
+
+  <!-- Background decorative elements -->
+  <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+    <div class="absolute -top-40 -right-40 w-96 h-96 bg-[#F0E8D8] rounded-full blur-3xl opacity-50"></div>
+    <div class="absolute -bottom-40 -left-40 w-96 h-96 bg-[#EBE0CD] rounded-full blur-3xl opacity-50"></div>
+  </div>
+
+  <!-- Header / Brand -->
+  <header class="max-w-md w-full mx-auto text-center pt-4">
+    <div class="inline-flex items-center justify-center gap-3 mb-2">
+      <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-[#946914] to-[#B8860B] flex items-center justify-center text-white shadow-md">
+        <i class="fa-solid fa-microchip text-xl"></i>
+      </div>
+      <h1 class="text-2xl font-bold tracking-tight text-[#2B2620]">TSS Group 4</h1>
+    </div>
+    <p class="text-sm text-[#7A7267]">Smart IoT Environment Monitoring & Automation Portal</p>
+  </header>
+
+  <!-- Auth Card Container -->
+  <main class="max-w-md w-full mx-auto my-8">
+    <div class="cream-card p-6 md:p-8">
+      
+      <!-- Tab Switcher -->
+      <div class="grid grid-cols-2 p-1.5 mb-6 bg-[#F6F3EC] rounded-xl border border-[#EBE4D8]">
+        <button id="tab-login" onclick="switchAuthTab('login')" class="py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-[#7A530C] bg-white shadow-sm flex items-center justify-center gap-2">
+          <i class="fa-solid fa-arrow-right-to-bracket text-xs"></i> Sign In
+        </button>
+        <button id="tab-register" onclick="switchAuthTab('register')" class="py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-[#7A7267] hover:text-[#2B2620] flex items-center justify-center gap-2">
+          <i class="fa-solid fa-user-plus text-xs"></i> Register
+        </button>
+      </div>
+
+      <!-- Feedback Alert Banner -->
+      <div id="auth-alert" class="hidden mb-6 p-4 rounded-xl text-sm flex items-start gap-3">
+        <i id="alert-icon" class="fa-solid fa-circle-exclamation mt-0.5 text-base"></i>
+        <div id="alert-message" class="flex-1 font-medium"></div>
+      </div>
+
+      <!-- 1. LOGIN FORM -->
+      <form id="form-login" onsubmit="handleLogin(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5" for="login-email">
+            Email Address
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39B90]">
+              <i class="fa-regular fa-envelope"></i>
+            </span>
+            <input 
+              type="email" 
+              id="login-email" 
+              required 
+              placeholder="user@tssgroup4.com"
+              class="cream-input w-full pl-10"
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="text-xs font-semibold uppercase tracking-wider text-[#7A7267]" for="login-password">
+              Password
+            </label>
+            <span class="text-xs text-[#946914] cursor-pointer hover:underline" onclick="fillDemoCredentials()">Use Demo Account</span>
+          </div>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39B90]">
+              <i class="fa-solid fa-lock"></i>
+            </span>
+            <input 
+              type="password" 
+              id="login-password" 
+              required 
+              placeholder="••••••••"
+              class="cream-input w-full pl-10 pr-10"
+              autocomplete="current-password"
+            >
+            <button type="button" onclick="togglePasswordVisibility('login-password', this)" class="absolute inset-y-0 right-0 pr-3.5 text-[#A39B90] hover:text-[#2B2620]">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-login-submit" class="btn-primary w-full mt-2 py-3">
+          <span>Sign In to Dashboard</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </button>
+      </form>
+
+      <!-- 2. REGISTRATION FORM (Hidden by default) -->
+      <form id="form-register" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5" for="reg-name">
+            Full Name
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39B90]">
+              <i class="fa-regular fa-user"></i>
+            </span>
+            <input 
+              type="text" 
+              id="reg-name" 
+              required 
+              placeholder="Dr. Engineer / Student"
+              class="cream-input w-full pl-10"
+              autocomplete="name"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5" for="reg-email">
+            Email Address
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39B90]">
+              <i class="fa-regular fa-envelope"></i>
+            </span>
+            <input 
+              type="email" 
+              id="reg-email" 
+              required 
+              placeholder="name@example.com"
+              class="cream-input w-full pl-10"
+              autocomplete="email"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold uppercase tracking-wider text-[#7A7267] mb-1.5" for="reg-password">
+            Password (min 6 characters)
+          </label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-[#A39B90]">
+              <i class="fa-solid fa-lock"></i>
+            </span>
+            <input 
+              type="password" 
+              id="reg-password" 
+              required 
+              minlength="6"
+              placeholder="Create strong password"
+              class="cream-input w-full pl-10 pr-10"
+              autocomplete="new-password"
+            >
+            <button type="button" onclick="togglePasswordVisibility('reg-password', this)" class="absolute inset-y-0 right-0 pr-3.5 text-[#A39B90] hover:text-[#2B2620]">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" id="btn-reg-submit" class="btn-primary w-full mt-2 py-3">
+          <span>Create Account</span>
+          <i class="fa-solid fa-check text-xs"></i>
+        </button>
+      </form>
+
+      <!-- Hardware Model Ready info banner -->
+      <div class="mt-6 pt-5 border-t border-[#EBE4D8] flex items-center justify-between text-xs text-[#7A7267]">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          ESP8266 IoT Gateway
+        </span>
+        <span class="font-medium text-[#2B2620]">DHT11 | LED | LCD 16x2</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center text-xs text-[#7A7267] py-4">
+    <p>Designed and Developed by TSS GROUP NO. 4</p>
+  </footer>
+
+  <!-- Auth Logic Script -->
+  <script src="/js/auth.js"></script>
+</body>
+</html>

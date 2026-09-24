@@ -1,0 +1,32 @@
+{
+  "name": "tss-group-4-iot",
+  "version": "1.0.0",
+  "description": "IoT Smart Environment Monitoring & Automation Dashboard by TSS GROUP NO. 4",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js"
+  },
+  "keywords": [
+    "iot",
+    "esp8266",
+    "dht11",
+    "sqlite",
+    "render",
+    "dashboard"
+  ],
+  "author": "TSS GROUP NO. 4",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "sqlite3": "^5.1.7"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
